@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pig Latin</title>
+</head>
+<body>
+    <script>
+    function translate(str) {
+        let lib = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+        if (lib.indexOf(str.charAt(0)) !== -1) {
+            return str + 'way';
+        }
+        let index;
+        for (let i = 0, len = str.length; i < len; i++) {
+            if (lib.indexOf(str.charAt(i)) !== -1) {
+                console.log(i);
+                index = i;
+                break;
+            }
+        }
+        var pre = str.slice(0, index);
+        return str.slice(index) + pre + 'ay';
+    }
+    
+    </script>
+</body>
+</html>

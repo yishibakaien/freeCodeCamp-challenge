@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DNA Pairing</title>
+</head>
+<body>
+    <script>
+    function pair(str) {
+        var arr = [];
+        var originArr = str.split('');
+        arr = originArr.map(item => _generator(item));
+
+        return arr;
+        function _generator(str) {
+            switch(str) {
+                case 'A':
+                return ['A', 'T'];
+                case 'T':
+                return ['T', 'A'];
+                case 'C':
+                return ['C', 'G'];
+                case 'G':
+                return ['G', 'C'];
+            }
+        }
+    }
+    </script>
+</body>
+</html>

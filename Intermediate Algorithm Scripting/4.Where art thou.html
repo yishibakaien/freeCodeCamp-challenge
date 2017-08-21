@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4.Where art thou</title>
+</head>
+<body>
+<script>
+function where(collection, source) {
+    var _copy = [];
+    collection.forEach(item => {
+        let obj = {};
+        for (let key in item) {
+            obj[key] = item[key];
+        }
+        for (let key in source) {
+            obj[key] = source[key];
+        }
+        _copy.push(obj);
+    });
+    var ret = collection.filter((item, index) => {
+        return JSON.stringify(item) === JSON.stringify(_copy[index]);
+    });
+    return ret;
+}
+</script>
+</body>
+</html>

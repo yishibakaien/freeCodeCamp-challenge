@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smallest Common Multiple</title>
+</head>
+<body>
+<script>
+function smallestCommons(arr) {
+    // 从小到大排序
+    arr.sort((a, b) => a - b);
+
+    var arrAll = [];
+    var common = [];
+
+    for (let i = arr[0]; i <= arr[1]; i++) {
+        arrAll.push(i);
+    }
+
+    // 所有值相乘
+    var max = arrAll.reduce((a, b) => a * b);
+
+    arrAll.forEach(item => {
+        for (let i = 1; i <= max; i++) {
+            if (i % item === 0) {
+                common.push(i);
+            }
+        }
+    });
+
+    var obj = {};
+
+    common.forEach(function(item) {
+        if (!obj[item]) {
+            obj[item] = 1;
+        } else {
+            obj[item]++;
+        }
+    });
+    // console.log(obj);
+
+    var commonArr = [];
+    for (let k in obj) {
+        if (obj[k] === arrAll.length) {
+            commonArr.push(k);
+        }
+    }
+    return commonArr.sort((a, b) => a - b)[0];
+}
+console.log(smallestCommons([1, 4]));
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diff Two Arrays</title>
+</head>
+<body>
+    <script>
+function diff(arr1, arr2) {
+    var a = arr1.filter(function(item) {
+        return arr2.indexOf(item) === -1;
+    });
+    var b = arr2.filter(function(item) {
+        return arr1.indexOf(item) === -1;
+    });
+    var c = a.concat(b);
+    return c;
+}
+    </script>
+</body>
+</html>

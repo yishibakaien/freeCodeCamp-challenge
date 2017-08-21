@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search and Replace</title>
+</head>
+<body>
+    <script>
+    function myReplace(str, before, after) {
+        if (/^[A-Z]/.test(before)) {
+            after = after.charAt(0).toUpperCase() + after.slice(1);
+        }
+        return str.replace(before, after);
+    }
+    </script>
+</body>
+</html>

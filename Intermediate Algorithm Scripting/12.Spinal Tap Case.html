@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Spinal Tap Case</title>
+</head>
+<body>
+<script>
+function spinalCase(str) {
+    // "It's such a fine line between stupid, and clever."
+    // --David St. Hubbins
+  
+    // 以空格分割驼峰命名词语
+    // 这里的 (?!^) 表示不匹配开头，https://codereview.stackexchange.com/questions/109899/convert-string-to-spinal-case
+    str = str.replace(/(?!^)([A-Z])/g, ' $1');
+    // console.log(str);
+    // 替换掉
+    str = str.replace(/[\s_]+(?=[A-Za-z])/g, '-').toLowerCase();
+    return str;
+}
+
+log(spinalCase('big-fish-cat'));
+log(spinalCase('big-fish-Cat'));
+log(spinalCase('Big-fish-cat'));
+log(spinalCase('-big-fish-cat'));
+log(spinalCase('-big-fish-Cat'));
+log(spinalCase('-big-fish-Cat-'));
+log(spinalCase('-Big-fish-cat'));
+log('===');
+log(spinalCase('big_fish_cat'));
+log(spinalCase('big_fish_Cat'));
+log(spinalCase('Big_fish_Cat'));
+log(spinalCase('-Big_fish_Cat'));
+log(spinalCase('_big_fish Cat'));
+log(spinalCase(' big_fish Cat'));
+log(spinalCase(' Big_fish cat '));
+log(spinalCase(' Big_fish cat _-'));
+log('===');
+log(spinalCase('BigFishCat'));
+log(spinalCase('bigFish Cat'));
+log(spinalCase('bigFish cat'));
+log(spinalCase('big Fish cat'));
+
+function log() {
+    console.log.apply(null, arguments);
+} 
+</script>
+</body>
+</html>

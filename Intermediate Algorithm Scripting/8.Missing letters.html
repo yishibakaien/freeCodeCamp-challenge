@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Missing letters</title>
+</head>
+<body>
+    <script>
+    function fearNotLetter(str) {
+        // 获取字符串 unicode 集合数组
+        let arr = str.split('').map(item => item.charCodeAt(0));
+        // 取出消失的数字
+        let miss = [];
+        arr.forEach((item, index, self) => {
+            // 这里不用担心边界问题
+            let diff = self[index + 1] - item;
+            if (diff > 1) {
+                for (let i = item + 1; i < self[index + 1]; i++) {
+                    miss.push(i);
+                }
+            }
+        });
+        if (miss.length) {
+            return miss.map(item => String.fromCharCode(item)).join('');
+        }
+        return undefined;
+    }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    /**
+     * 补位
+     * @param  {[type]} num 需要补位的数字
+     * @param  {[type]} len 期望的长度
+     * @example 
+     * _padZero(3, 3) => 300 数字3补位0到三位数
+     */
+    function _padZero(num, len) {
+        var zero = '';
+        for (var i = 0; i < len; i++) {
+            zero += '0';
+        }
+        return Number(num + zero);
+    }
+    function _formatNum(num) {
+        var arr = num.toString().split('').reverse();
+        var ret = [];
+        arr.forEach(function(item, index) {
+            ret.push(_padZero(item, index));
+        });
+        return ret;
+    }
+
+    // =========
+    // 开始
+    function generator(num, format) {
+        num = Number(num);
+        var str = '';
+        if (num === 0) {
+            console.log('num === 0');
+            return str;
+        }
+        if ((num > 0) && (num <= 3)) {
+            console.log('num 1 - 3');
+            for (var i = 0; i < num; i++) {
+                str += format.symbol[0];
+            }
+            return str;
+        }
+        if (num === 4) {
+            console.log('num === 4');
+            return format.symbol[0] + format.symbol[1];
+        }
+        if (num === 5) {
+            console.log('num === 5');
+            return format.symbol[1];
+        }
+        if (num > 5 && num < 9) {
+            console.log('num 6 - 8');
+            while ((num - 5) > 0) {
+                str += format.symbol[0];
+                num--;
+            }
+            str = format.symbol[1] + str;
+            return str;
+        }
+        if (num === 9) {
+            console.log('num === 9');
+            return format.symbol[0] + format.symbol[2];
+        }
+    }
+    function convert(num) {
+        var romanBase = [
+            {digit: 'units', symbol: ['I', 'V', 'X']},
+            {digit: 'tens', symbol: ['X', 'L', 'C']},
+            {digit: 'hundreds', symbol: ['C', 'D', 'M']},
+            {digit: 'thousands', symbol: ['M', 'x', 'l']}
+        ];
+        var numArr = num.toString().split('').reverse();
+        var resultArr = numArr.map(function(item, index) {
+            return generator(item, romanBase[index]);
+        });
+
+        return resultArr.reverse().join('');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sum All Primes</title>
+</head>
+<body>
+<script>
+function sumPrimes(num) {
+    if (num < 2) {
+        return;
+    }
+    var arr = [];
+    for (var i = 2; i <= num; i++) {
+        if (isPrime(i)) {
+            arr.push(i);
+        }
+    }
+    console.log(arr);
+    return arr.reduce((pre, cur) => pre + cur);
+
+    function isPrime(num) {
+        // 这里的开方 (Math.sqrt) 优化计算速度
+        // 因为如果一个数不是素数是合数，
+        // 那么一定可以由两个自然数相乘得到，
+        // 其中一个大于或等于它的平方根，一个小于或等于它的平方根。并且成对出现。
+        
+        // *如果不采用开方的计算方式，则 i < num 不能取等号
+        for (var i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}   
+</script>
+</body>
+</html>

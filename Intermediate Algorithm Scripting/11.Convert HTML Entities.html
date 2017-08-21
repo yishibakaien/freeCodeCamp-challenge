@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Convert HTML Entities</title>
+</head>
+<body>
+<h3>
+    <a href="https://dev.w3.org/html5/html-author/charref" target="_blank">HTML Entities</a>
+</h3>
+
+<span style="font-size: 30px">&xotime;&xoplus;&phone;&star;&bigstar;</span>
+<p style="font-size: 30px;">&otimes;</p>
+<script>
+    function convert(str) {
+        // &colon;&rpar;
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '\"': '&quot;',
+            '\'': '&apos;'
+        };
+        return str.split('').map(item => {
+            return map[item] || item;
+        }).join('');
+    }   
+</script>
+</body>
+</html>

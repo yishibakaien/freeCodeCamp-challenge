@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sorted Union</title>
+</head>
+<body>
+    <script>
+    function unite(arr1, arr2, arr3) {
+        var target = Array.prototype.shift.call(arguments);
+        var rest = Array.prototype.reduce.call(arguments, (pre, cur) => pre.concat(cur));
+        var uniquelize = rest.filter(item => {
+            if (target.indexOf(item) !== -1) {
+                return false;
+            }
+            return true;
+        });
+        return target.concat(uniquelize);
+    }
+    </script>
+</body>
+</html>

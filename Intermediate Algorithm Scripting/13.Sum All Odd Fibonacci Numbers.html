@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sum All Odd Fibonacci Numbers</title>
+</head>
+<body>
+<script>
+function sumFibs(num) {
+    var seed = [1, 1];
+
+    while (seed[seed.length - 1] <= num) {
+        var len = seed.length;
+        seed.push((function() {
+            return seed[len - 1] + seed[len - 2];
+        })());
+    }
+    // 上面生成的数组，最后一项肯定会大于 num
+    // 弹走数组的最后一项
+    seed.pop();
+    // 数组奇数项
+    var oddSeed = seed.filter(item => item % 2 !== 0);
+
+    return oddSeed.reduce((pre, cur) => pre + cur);
+}
+console.log(sumFibs(55));
+
+</script>
+</body>
+</html>
