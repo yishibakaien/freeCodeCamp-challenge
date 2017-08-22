@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finders Keepers</title>
+</head>
+<body>
+<p>写一个 function，它遍历数组 arr，并返回数组中第一个满足 func 返回值的元素。举个例子，如果 arr 为 [1, 2, 3]，func 为 function(num) {return num === 2; }，那么 find 的返回值应为 2。</p>
+<script>
+    function find(arr, func) {
+        arr.sort((a, b) => a - b);
+
+        for (let item of arr) {
+            var result = func.call(null, item);
+            if (result) {
+                return item;
+            }
+        }
+        return undefined;
+    }
+</script>
+</body>
+</html>

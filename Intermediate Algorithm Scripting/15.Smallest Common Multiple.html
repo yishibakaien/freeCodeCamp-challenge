@@ -9,26 +9,31 @@
 <body>
     <script>
     function smallestCommons(arr) {
-        // 从小到大排序
-        arr.sort((a, b) => a - b);
 
         var arrAll = [];
-
-        // 取连续数
-        for (let i = arr[1]; i >= arr[0]; i--) {
+        var max = Math.max.apply(null, arr);
+        var min = Math.min.apply(null, arr);
+        
+        // 取连续数 (从大到小)
+        for (let i = max; i >= min; i--) {
             arrAll.push(i);
         }
 
-        // 两个数之间的最小公倍数为两个数之积除以最大公约数。
-        return arrAll.reduce((m, n) => n * m / getCommons(m, n));
+        // http://www.cnblogs.com/lilicat/p/6256025.html
+        // 两个数之间的最小公倍数为两个数之积除以最大公约数
+        return arrAll.reduce((m, n) => m * n / getCommons(m, n));
 
         // 获得最大公约数，辗转相除法：用小数除大数，如果余数不是零，就把余数和较小的数构成一组新数，继续上面的除法，直到大数被小数约尽，此时比较小的数就是最大公约数 80=36*2+8,36=8*4+4,8=4*2+0 
         function getCommons(a, b) {
-            if (a % b === 0) return b;
+            if (a % b === 0) {
+                return b;
+            }
             return getCommons(b, a % b);
         }
     }
     console.log(smallestCommons([1, 4]));
+    console.log(smallestCommons([1, 10]));
+    console.log(smallestCommons([1, 13]));
     </script>
 </body>
 

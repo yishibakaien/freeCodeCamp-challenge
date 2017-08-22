@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arguments Optional</title>
+</head>
+<body>
+    <p>创建一个计算两个参数之和的 function。如果只有一个参数，则返回一个 function，该 function 请求一个参数然后返回求和的结果。
+
+例如，add(2, 3) 应该返回 5，而 add(2) 应该返回一个 function。
+
+调用这个有一个参数的返回的 function，返回求和的结果：
+
+var sumTwoAnd = add(2);
+
+sumTwoAnd(3) 返回 5。
+
+如果两个参数都不是有效的数字，则返回 undefined。</p>
+<select name="" id="cc" onchange="aa(this.value)">
+    <option value="aaaV" id="aa" >aaa</option>
+    <option value="bbbV" id="bb" >bbb</option>
+</select>
+<script>
+    function add() {
+
+        if (!checkNumber.apply(null, arguments)) {
+            return undefined;
+        }
+
+        var sum = 0;
+
+        var args = arguments;
+
+        if (args.length === 1) {
+            return function() {
+                if (!checkNumber.apply(null, arguments)) {
+                    return undefined;
+                }
+                return sum + args[0] + arguments[0];
+            };
+        }
+
+        if (args.length === 2) {
+            return sum + args[0] + args[1];
+        }
+
+        function checkNumber() {
+            return Array.prototype.every.call(arguments, item => typeof item === 'number' && !isNaN(item));
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Steamroller</title>
+</head>
+<body>
+<p>对嵌套的数组进行扁平化处理。你必须考虑到不同层级的嵌套。</p>
+<script>
+    function steamroller(arr) {
+        // I'm a steamroller, baby
+        let ret = [];
+        _walk(arr);
+        return ret;
+        // 递归遍历
+        function _walk(arr) {
+            for (let item of arr) {
+                let isArray = _isArray(item);
+                if (!isArray) {
+                    ret.push(item);
+                    continue;
+                }
+                _walk(item);
+            }
+        }
+        // 判断是否为数组对象
+        function _isArray(item) {
+            return Object.prototype.toString.call(item) === '[object Array]';
+        }
+    }
+
+log(steamroller([[["a"]], [["b"]]]));
+log(steamroller([1, [2], [3, [[4]]]]));
+log(steamroller([1, [], [3, [[4]]]]));
+log(steamroller([1, {}, [3, [[4]]]]));
+
+function log() {
+   return console.log.apply(null, arguments);
+}
+</script>
+</body>
+</html>
