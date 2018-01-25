@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title Case a Sentence</title>
+</head>
+
+<body>
+    <p>句中单词首字母大写 确保字符串的每个单词首字母都大写，其余部分小写。
+    </p>
+    <script>
+    function titleCase(str) {
+        // 请把你的代码写在这里
+        str = str.toLowerCase().split(/\s+/).map(item => {
+            let first = item.charAt(0).toUpperCase();
+            let rest = item.slice(1);
+            return first + rest;
+        }).join(' ');
+        return str;
+    }
+
+    titleCase("I'm a little tea pot");
+    </script>
+</body>
+
+</html>

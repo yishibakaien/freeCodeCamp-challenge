@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reverse a String</title>
+</head>
+
+<body>
+    <p>先把字符串转化成数组，再借助数组的reverse方法翻转数组顺序，最后把数组转化成字符串。</p>
+    <script>
+    function reverseString(str) {
+        // 请把你的代码写在这里
+        str = str.split('').reverse().join('');
+        return str;
+    }
+
+    reverseString("hello");
+    </script>
+</body>
+
+</html>

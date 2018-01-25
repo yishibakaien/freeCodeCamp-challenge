@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm the Ending</title>
+</head>
+
+<body>
+    <p>检查字符串结尾 判断一个字符串(str)是否以指定的字符串(target)结尾。
+    </p>
+    <script>
+    function confirmEnding(str, target) {
+        // 请把你的代码写在这里
+        let len = str.length;
+        return str.slice(len - target.length, len) === target;
+    }
+
+    confirmEnding("Bastian", "n");
+    </script>
+</body>
+
+</html>

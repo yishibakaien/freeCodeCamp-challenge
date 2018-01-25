@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Check for Palindromes</title>
+</head>
+
+<body>
+    <p>如果给定的字符串是回文，返回true，反之，返回false。 如果一个字符串忽略标点符号、大小写和空格，正着读和反着读一模一样，那么这个字符串就是palindrome(回文)。
+    </p>
+    <script>
+    function palindrome(str) {
+        // 请把你的代码写在这里
+        str = str.toLowerCase().replace(/[^a-zA-Z\d]+/g, '');
+        return str === str.split('').reverse().join('');
+    }
+
+
+
+    palindrome("eye");
+    </script>
+</body>
+
+</html>
