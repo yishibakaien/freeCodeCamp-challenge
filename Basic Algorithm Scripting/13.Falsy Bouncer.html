@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Falsy Bouncer</title>
+</head>
+
+<body>
+    <p>过滤数组假值 （真假美猴王） 删除数组中的所有假值。 在JavaScript中，假值有false、null、0、""、undefined 和 NaN。</p>
+    <script>
+    /**
+     *
+     * 印象中，数组循环操作时，有时候会自动忽略某些假值(undefined?)，这里不是很明确，有点忘了
+     */
+    function bouncer(arr) {
+        // 请把你的代码写在这里
+        return arr.filter(item => {
+            if (item !== item) {
+                return false;
+            }
+            return [false, null, 0, '', undefined].every(item1 => item1 !== item);
+        });
+    }
+
+    bouncer([7, "ate", "", false, 9]);
+    </script>
+</body>
+
+</html>
