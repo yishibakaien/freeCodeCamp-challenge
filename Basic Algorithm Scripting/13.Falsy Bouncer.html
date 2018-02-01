@@ -12,6 +12,9 @@
     /**
      *
      * 印象中，数组循环操作时，有时候会自动忽略某些假值(undefined?)，这里不是很明确，有点忘了
+     *
+     * 已解决 => forEach 、 for in 、map 等操作时，如果数组的 undefined 是自动生成的 empty slots （在Chrome 
+     * 中会显示 undefined * n）则会在循环中忽略，如果是实际存在的 undefined 则不会被忽略
      */
     function bouncer(arr) {
         // 请把你的代码写在这里
