@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Where do I belong</title>
+</head>
+
+<body>
+    <p>数组排序并找出元素索引 我身在何处？ 先给数组排序，然后找到指定的值在数组的位置，最后返回位置对应的索引。
+    </p>
+    <script>
+    function where(arr, num) {
+        // 请把你的代码写在这里
+        arr.push(num);
+        return arr.sort((a, b) => a - b).indexOf(num);
+    }
+
+    where([40, 60], 50);
+    </script>
+</body>
+
+</html>
