@@ -1,3 +1,4 @@
 # freeCodeCamp challenge answer 
-- all of this is pass test 
-- some of them using ES2015 
+- all of them passed test 
+- some of them used ES2015 
+- to be continued
