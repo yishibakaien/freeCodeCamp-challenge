@@ -8,31 +8,31 @@
 
 <body>
     <p>设计一个收银程序 checkCashRegister() ，其把购买价格(price)作为第一个参数 , 付款金额 (cash)作为第二个参数, 和收银机中零钱 (cid) 作为第三个参数. cid 是一个二维数组，存着当前可用的找零. 当收银机中的钱不够找零时返回字符串 "Insufficient Funds". 如果正好则返回字符串 "Closed". 否则, 返回应找回的零钱列表,且由大到小存在二维数组中.</p>
-
+    <!-- <textarea name="" placeholder="剩余零钱" id="" cols="30" rows="10"></textarea>
+    <hr>
     <input type="text" id="pay" placeholder="收款额">
     <hr>
     <input type="text" id="shoudPay" placeholder="应收款">
     <hr>
     <button id="calculate">计算</button>
-    <div id="result"></div>
-
+    <div id="result"></div> -->
     <script>
-    var cid = [
+    let cid = [
         ["PENNY", 1.01], // 1 分 0.01
         ["NICKEL", 2.05], // 5 分 0.05
         ["DIME", 3.10], // 10 分 0.1
         ["QUARTER", 4.25], // 25 分 0.25
         ["ONE", 90.00], // 1 元
-        // ["FIVE", 55.00], // 5 元
+        ["FIVE", 55.00], // 5 元
         ["TEN", 20.00], // 10 元
         ["TWENTY", 60.00], // 20 元
         ["ONE HUNDRED", 100.00] // 100 元
     ];
 
-
-    function warn(message) {
-        console.warn(message);
-    }
+    // 保留小数位数
+    Number.prototype._save = function(num = 2) {
+        return +this.toFixed(num);
+    };
 
     function merge(target = {}, object) {
         for (let k in object) {
@@ -49,157 +49,141 @@
     // 不够找零
     const NOT_ENOUGH = 'Insufficient Funds';
 
-    // 恰好找零完之后余额为零
-    const Closed = 'Closed';
+    // 关闭
+    const CLOSED = 'Closed';
 
     function checkCashRegister(price, cash, cid) {
-        if (typeof price !== 'number' || typeof cash !== 'number') {
-            warn('Invalid or unexpected token');
-            return;
+
+        // 格式化 cid 期望 => [{unit: 'PENNY', min: 0.01, total: 1.01}, ...]
+
+        let cidMap = {
+            PENNY: {
+                min: 0.01
+            },
+            NICKEL: {
+                min: 0.05
+            },
+            DIME: {
+                min: 0.10
+            },
+            QUARTER: {
+                min: 0.25
+            },
+            ONE: {
+                min: 1.00
+            },
+            FIVE: {
+                min: 5.00
+            },
+            TEN: {
+                min: 10.00
+            },
+            TWENTY: {
+                min: 20.00
+            },
+            ONE_HUNDRED: {
+                min: 100.00
+            }
+        };
+
+        let cidArr = [];
+
+        for (let item of cid) {
+            // 处理 'ONE HUNDRED' 中的空格 => ONE_HUNDRED
+            let unit = item[0].replace(' ', '_');
+
+            let obj = {};
+
+            obj.unit = unit;
+            obj.total = item[1];
+            merge(obj, cidMap[unit]);
+
+            cidArr.push(obj);
         }
 
+        // 最终的数据结构
+        cidArr.sort((a, b) => b.min - a.min);
+
         // 收银机剩余的零钱数
-        let remain = cid.map(item => item[1]).reduce((pre, cur) => pre + cur).toFixed(2);
-        remain = Number(remain);
-        
+        let remain = cidArr.map(item => item.total).reduce((pre, cur) => pre + cur)._save();
+
         // 找零
         let change = cash - price;
 
-        // 找零为负数
-        if (change < 0) {
-            warn('cash must equal or bigger than price');
-            return;
-        }
-
         // 无需找零
-        if (change === 0) {
+        if (change <= 0) {
             return [];
         }
 
         // 找零数额大于剩余零钱
         if (change > remain) {
-            warn(NOT_ENOUGH);
             return NOT_ENOUGH;
         }
 
         // 找零数额等于剩余零钱
         if (change === remain) {
-            console.log(Closed);
-            return Closed;
+            return CLOSED;
         }
-
-
-        let cidObj = {};
-        for (let item of cid) { 
-            // 处理 'ONE HUNDRED' 中的空格
-            let k = item[0].replace(' ', '_');
-
-            cidObj[k] = {
-                total: item[1]
-            };
-        }
-
-        // [min, max)  min 值可取到，max 不可取到
-        let changeMap = {
-            PENNY: {
-                min: 0.01,
-                max: 0.05
-            },
-            NICKEL: {
-                min: 0.05,
-                max: 0.10
-            },
-            DIME: {
-                min: 0.10,
-                max: 0.25
-            },
-            QUARTER: {
-                min: 0.25,
-                max: 1.00
-            },
-            ONE: {
-                min: 1.00,
-                max: 5.00
-            },
-            FIVE: {
-                min: 5.00,
-                max: 10.00
-            },
-            TEN: {
-                min: 10.00,
-                max: 20.00
-            },
-            TWENTY: {
-                min: 20.00,
-                max: 100.00
-            },
-            ONE_HUNDRED: {
-                min: 100.00,
-                max: 100.00
-            }
-        };
-
-        merge(changeMap, cidObj);
-        // console.log(changeMap);
-
-        // 计算各个零钱的个数
-        for (let k in changeMap) {
-            if (!changeMap.hasOwnProperty(k)) {
-                continue;
-            }
-            changeMap[k].count = Math.round(changeMap[k].total / changeMap[k].min);
-        }
-
-        // 到这里格式化完毕 所需的数据结构 TWENTY: {count: 3, min: 20, total: 60}
-        console.log(changeMap);
 
         // 返回出去的结果
         let result = [];
 
-        function checkRange(change, changeMap) {
-            let arr = [];
+        // 计数器
+        let i = 0;
 
-            for (let k in changeMap) {
-                if (!changeMap.hasOwnProperty(k)) {
-                    continue;
-                }
-                let obj = {};
-                obj.unit = k;
-                merge(obj, changeMap[k]);
-                arr.push(obj);
+        // 核心计算方法
+        function calc(change, arr) {
+
+            let _arr = arr[i];
+
+            // 理论扣除次数
+            let times = (change / _arr.min) | 0;
+
+            // 最大扣除次数
+            let maxTimes = Math.min(_arr.total / _arr.min, times);
+
+            let cost = (maxTimes * _arr.min)._save();
+
+            let rest = (change - cost)._save();
+
+            cost && result.push([_arr.unit, cost]);
+
+            _arr.total = _arr.total - cost;
+
+
+            while (i < arr.length - 1) {
+                i++;
+                calc(rest, arr);
             }
 
-            // 根据 min 值由大到小排序
-            arr.sort((a, b) => b.min - a.min);
+            return result;
+        }
+        let ret = calc(change, cidArr);
+        console.log(ret);
 
-            for (let i = 0, len = arr.length; i < len; i++) {
-                let _arr = arr[i];
-
-                if (change >= _arr.min && change < _arr.max) {
-                    if (_arr.total) {
-                        if (_arr.total >= change) {
-                            let rest = _arr.total % change;
-
-                            // 2018年2月7日17:25:21 写到这里，没写完，这里是有问题的
-                            result.push([_arr.unit, Math.floor(_arr.total / change)])
-
-                        }
-                        
-                    } else {
-                        continue;
-                    }
-                }
-
-            }
+        function checkResult(change, ret) {
+            return ret.length && ret.map(item => item[1]).reduce((a, b) => a + b)._save() === change;
         }
 
-        // 确定找零最大面额的范围
-        console.log(checkRange(change, changeMap))
-
+        if (checkResult(change, ret)) {
+            return ret;
+        } else {
+            return NOT_ENOUGH;
+        }
     }
 
-    var result = checkCashRegister(10, 20.00, cid);
-    // console.log(result);
+    var result = checkCashRegister(3.26, 100.00, [
+        ["PENNY", 1.01],
+        ["NICKEL", 2.05],
+        ["DIME", 3.10],
+        ["QUARTER", 4.25],
+        ["ONE", 90.00],
+        ["FIVE", 55.00],
+        ["TEN", 20.00],
+        ["TWENTY", 60.00],
+        ["ONE HUNDRED", 100.00]
+    ]);
+    console.log(result);
 
     // Example cash-in-drawer array:
     // [["PENNY", 1.01],
