@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Update</title>
+</head>
+
+<body>
+    <p>依照一个存着新进货物的二维数组，更新存着现有库存(在 arr1 中)的二维数组. 如果货物已存在则更新数量 . 如果没有对应货物则把其加入到数组中，更新最新的数量. 返回当前的库存数组，且按货物名称的字母顺序排列.</p>
+    <script>
+    function updateInventory(arr1, arr2) {
+        // 请保证你的代码考虑到所有情况
+        function makeMap(arr) {
+            let map = {};
+            for (let item of arr) {
+                map[item[1]] = item[0];
+            }
+            return map;
+        }
+
+        function merge(obj1, obj2) {
+            for (let k in obj2) {
+                if (obj1[k]) {
+                    obj1[k] += obj2[k];
+                } else {
+                    obj1[k] = obj2[k];
+                }
+            }
+
+            return obj1;
+        }
+
+        function obj2arr(obj) {
+            let ret = [];
+
+            for (let k in obj) {
+                ret.push([obj[k], k]);
+            }
+
+            return ret.sort((a, b) => a[1].charCodeAt(0) - b[1].charCodeAt(0));
+        }
+        let map1 = makeMap(arr1);
+        let map2 = makeMap(arr2);
+
+        let map3 = merge(map1, map2);
+
+        return obj2arr(map3);
+    }
+
+    // 仓库库存示例
+    var curInv = [
+        [21, "Bowling Ball"],
+        [2, "Dirty Sock"],
+        [1, "Hair Pin"],
+        [5, "Microphone"]
+    ];
+
+    var newInv = [
+        [2, "Hair Pin"],
+        [3, "Half-Eaten Apple"],
+        [67, "Bowling Ball"],
+        [7, "Toothpaste"]
+    ];
+
+    console.log(updateInventory(curInv, newInv));
+    </script>
+</body>
+
+</html>
