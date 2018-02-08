@@ -108,7 +108,7 @@
         let remain = cidArr.map(item => item.total).reduce((pre, cur) => pre + cur)._save();
 
         // 找零
-        let change = cash - price;
+        let change = (cash - price)._save();
 
         // 无需找零
         if (change <= 0) {
@@ -162,6 +162,7 @@
         console.log(ret);
 
         function checkResult(change, ret) {
+            console.log(change);
             return ret.length && ret.map(item => item[1]).reduce((a, b) => a + b)._save() === change;
         }
 
@@ -172,7 +173,7 @@
         }
     }
 
-    var result = checkCashRegister(3.26, 100.00, [
+    var result = checkCashRegister(3.26, 20.00, [
         ["PENNY", 1.01],
         ["NICKEL", 2.05],
         ["DIME", 3.10],
