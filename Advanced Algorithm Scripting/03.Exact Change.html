@@ -136,20 +136,25 @@
 
             let _arr = arr[i];
 
-            // 理论扣除次数
-            let times = (change / _arr.min) | 0;
+            // 期望从此面额的零钱取出的零钱的数量
+            let expectCount = (change / _arr.min) | 0;
 
-            // 最大扣除次数
-            let maxTimes = Math.min(_arr.total / _arr.min, times);
+            // 此面额的零钱能取出的最大数量
+            let maxCount = _arr.total / _arr.min;
 
-            let cost = (maxTimes * _arr.min)._save();
+            // 最终取出的数量为 expectCount 与 maxCount 两者的中的最小值
+            let count = Math.min(expectCount, maxCount);
 
+            // 此面额零钱的消耗量
+            let cost = (count * _arr.min)._save();
+
+            // 此时需找零的钱还剩多少
             let rest = (change - cost)._save();
 
+            // 如果 cost 有值 (不为0)
             cost && result.push([_arr.unit, cost]);
 
             _arr.total = _arr.total - cost;
-
 
             while (i < arr.length - 1) {
                 i++;
@@ -161,6 +166,7 @@
         let ret = calc(change, cidArr);
         console.log(ret);
 
+        // 判断最终的找零结果是否符合预期 (找零的数值是否与需找零值相等)
         function checkResult(change, ret) {
             console.log(change);
             return ret.length && ret.map(item => item[1]).reduce((a, b) => a + b)._save() === change;
@@ -169,21 +175,12 @@
         if (checkResult(change, ret)) {
             return ret;
         } else {
+            // 没有找到匹配的找零结果
             return NOT_ENOUGH;
         }
     }
 
-    var result = checkCashRegister(3.26, 20.00, [
-        ["PENNY", 1.01],
-        ["NICKEL", 2.05],
-        ["DIME", 3.10],
-        ["QUARTER", 4.25],
-        ["ONE", 90.00],
-        ["FIVE", 55.00],
-        ["TEN", 20.00],
-        ["TWENTY", 60.00],
-        ["ONE HUNDRED", 100.00]
-    ]);
+    var result = checkCashRegister(3.26, 3.50, cid);
     console.log(result);
 
     // Example cash-in-drawer array:
