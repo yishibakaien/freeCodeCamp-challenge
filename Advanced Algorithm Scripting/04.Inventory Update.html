@@ -11,6 +11,8 @@
     <script>
     function updateInventory(arr1, arr2) {
         // 请保证你的代码考虑到所有情况
+
+        // 生成对象形式的数据结构
         function makeMap(arr) {
             let map = {};
             for (let item of arr) {
@@ -21,6 +23,9 @@
 
         function merge(obj1, obj2) {
             for (let k in obj2) {
+                if (!obj2.hasOwnProperty(k)) {
+                    continue;
+                }
                 if (obj1[k]) {
                     obj1[k] += obj2[k];
                 } else {
@@ -31,6 +36,7 @@
             return obj1;
         }
 
+        // 对象转数组
         function obj2arr(obj) {
             let ret = [];
 
@@ -38,6 +44,7 @@
                 ret.push([obj[k], k]);
             }
 
+            // 按照首字母排序
             return ret.sort((a, b) => a[1].charCodeAt(0) - b[1].charCodeAt(0));
         }
         let map1 = makeMap(arr1);
