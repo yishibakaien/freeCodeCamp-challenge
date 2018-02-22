@@ -12,6 +12,12 @@
     function permAlone(str) {
         let arrCol = str.split('');
 
+        // 所有的字符串都相同的情况
+        if ([...new Set(arrCol)].length === 1) {
+            return 0;
+        }
+        // 排列组合算法
+
     }
 
     permAlone('aab');
